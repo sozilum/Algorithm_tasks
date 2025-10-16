@@ -1,10 +1,43 @@
 
-
-pub fn main(){
-
-	pub fn longest_common_prefix(strs: Vec<String>) -> Option<String>{
-
+pub fn longest_common_prefix(strs: Vec<String>) -> String{
+	let mut aux: String = String::new();
+	let mut answer: String = String::new();
+	let mut flag: bool = false;
 	
-		Ok()
+
+	for word in strs.iter(){
+
+		if aux != "" {
+
+			for (letter_index, letters) in word.chars().enumerate(){
+				println!("номер индекса {} буква {}", letter_index, letters);
+				if letters == aux.chars().nth(letter_index).unwrap(){
+					println!("Запушена буква {}", letters);
+					answer.push(letters);
+					println!("Ответ равен {}", answer);
+				}else{
+					flag = true;
+					break;
+				};
+
+			}
+
+		}else{
+			aux = word.clone();
+		};
+
 	}
+	answer
+
+}
+
+
+fn main(){
+	let strs: Vec<String> = vec!["flower".to_string(),"flow".to_string(),"flight".to_string()];
+	let result = longest_common_prefix(strs);
+	println!("результат {}", result);
+
+	let another_strs:Vec<String> = vec!["dog".to_string(),"racecar".to_string(),"car".to_string()];
+	let another_result = longest_common_prefix(another_strs);
+	println!("Ещё один тест {}", another_result);
 }

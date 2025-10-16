@@ -1,4 +1,4 @@
-ййuse std::collections::HashMap;
+use std::collections::HashMap;
 
 pub fn main(){
 
