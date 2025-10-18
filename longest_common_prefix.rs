@@ -1,26 +1,21 @@
-
 pub fn longest_common_prefix(strs: Vec<String>) -> String{
 	let mut aux: String = String::new();
 	let mut answer: String = String::new();
-	let mut flag: bool = false;
-	
 
 	for word in strs.iter(){
 
 		if aux != "" {
 
 			for (letter_index, letters) in word.chars().enumerate(){
-				println!("номер индекса {} буква {}", letter_index, letters);
 				if letters == aux.chars().nth(letter_index).unwrap(){
-					println!("Запушена буква {}", letters);
 					answer.push(letters);
-					println!("Ответ равен {}", answer);
 				}else{
-					flag = true;
 					break;
 				};
 
 			}
+
+			aux = answer;
 
 		}else{
 			aux = word.clone();
