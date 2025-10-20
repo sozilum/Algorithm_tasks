@@ -2,27 +2,38 @@ pub fn longest_common_prefix(strs: Vec<String>) -> String{
 	let mut aux: String = String::new();
 	let mut answer: String = String::new();
 
-	for word in strs.iter(){
+	if strs.iter().len() != 1{
 
-		if aux != "" {
+		for (word_index, word) in strs.iter().enumerate(){
+			
+			if aux != "" {
 
-			for (letter_index, letters) in word.chars().enumerate(){
-				if letters == aux.chars().nth(letter_index).unwrap(){
-					answer.push(letters);
+				for (letter_index, letters) in word.chars().enumerate(){
+					if letters == aux.chars().nth(letter_index).unwrap(){
+						answer.push(letters);
+					}else{
+						break;
+					};
+				}
+
+				if word_index != strs.iter().len() - 1{
+					aux = answer.clone();
+					answer = "".to_string();
+
 				}else{
-					break;
+					continue;
 				};
 
-			}
 
-			aux = answer;
+			}else{
+				aux = word.clone();
+			};
 
-		}else{
-			aux = word.clone();
-		};
-
-	}
-	answer
+		}
+	}else{
+		answer = strs.iter().next().unwrap().clone();
+	};
+		answer
 
 }
 
@@ -32,7 +43,16 @@ fn main(){
 	let result = longest_common_prefix(strs);
 	println!("результат {}", result);
 
-	let another_strs:Vec<String> = vec!["dog".to_string(),"racecar".to_string(),"car".to_string()];
-	let another_result = longest_common_prefix(another_strs);
-	println!("Ещё один тест {}", another_result);
+	let strs:Vec<String> = vec!["dog".to_string(),"racecar".to_string(),"car".to_string()];
+	let result = longest_common_prefix(strs);
+	println!("Ещё один тест {}", result);
+
+	let strs:Vec<String> = vec!["a".to_string()];
+	let result = longest_common_prefix(strs);
+	println!("Ещё один тест {}", result);
+
+	let strs:Vec<String> = vec!["aaa".to_string(),"aa".to_string(),"aaa".to_string()];
+	let result = longest_common_prefix(strs);
+	println!("Ещё один тест {}", result);
+
 }
