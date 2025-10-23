@@ -56,7 +56,7 @@ fn main(){
 	println!("asnwer {}", asnwer.to_string());
 
 	let s = "([)])";
-	println!("must be true");
+	println!("must be false");
 	let answer = valid_parentheses(s);
 	println!("asnwer {}", asnwer.to_string());
 	
