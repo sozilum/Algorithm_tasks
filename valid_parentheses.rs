@@ -1,63 +1,154 @@
-
 pub fn valid_parenthese(s: String) -> bool{
-	let mut asnwer: bool = false;
-	let mut aux_string: String = String::from::new();
-	let mut aux_num: i32 = 0;
-	let mut some_aux: String = String::from::new();
+	let char_vector: Vec<char> = s.chars().collect();
+	let mut answer: bool = true;
+	let mut check_vector: Vec<char> = vec![];
+	let mut flag: bool = false;
 
-	match s{
-		s if s.len() % 2 != 0 => answer = false;
-		s if s.len() % 2 == 0 => {
-			aux_num = s.len() / 2;
 
-			aux_string = s[aux_num..];
+	if s.len() >= 2{
+		for symbol in char_vector.iter(){
 
-			for symbol in aux_string{
+			match symbol{
+				symbol if *symbol == '('=>  check_vector.push(*symbol),
+				symbol if *symbol == '{' => check_vector.push(*symbol),
+				symbol if *symbol == '[' => check_vector.push(*symbol),
+				
+				symbol if *symbol == ')' =>{
+					match check_vector.last(){
+						Some(symbol) if *symbol == '(' => {
+							check_vector.pop();
+							flag = true;
+						},
+						None => {
+							answer = false;
+						},
+						Some(_) => {
+							answer = false;
+						},
+					};
 
-				match symbol{
-					symbol if symbol == ")" => some_aux.push("(");
-					symbol if symbol == "]" => some_aux.push("[");
-					symbol if symbol == "}" => some_aux.push("{");
-				}
-			}
+				},
+				symbol if *symbol == '}' =>{
+					match check_vector.last(){
+						Some(symbol) if *symbol == '{' => {
+							check_vector.pop();
+							flag = true;
+						},
+						None => {
+							answer = false;
+						},
+						Some(_) => {
+							answer = false;
+						},
+					};
+				},
+				symbol if *symbol == ']' =>{
+					match check_vector.last(){
+						Some(symbol) if *symbol == '[' => {
+							check_vector.pop();
+							flag = true;
+						},
+						None => {
+							answer = false;
+						},
+						Some(_) => {
+							answer = false;
+						},
+					};
+				},
+				_ => answer = false,
+			};
+		};
 
-			if some_aux == aux[..aux_num]{
-				answer = true;
-			}
-		}
-		_ => panic!("something gone wrong")
-	}
+
+	}else{
+		answer = false;
+	};
+
+	if check_vector.len() != 0{
+		answer = false;
+	};
+
+	if flag == false{
+		answer = false;
+	};
+
 	answer
-	
 }
+
+//the reference solution
+
+impl Solution {
+    pub fn is_valid(s: String) -> bool {
+        let mut my_stack = Vec::with_capacity(s.len());
+        for c in s.chars() {
+            if c == '(' || c == '[' || c == '{' {
+                my_stack.push(c);
+            } else {
+                match my_stack.pop() {
+                    None => {return false;},
+                    Some(last) => {
+                        match (last, c) {
+                            ('(', ')') => {continue;},
+                            ('[', ']') => {continue;},
+                            ('{', '}') => {continue;},
+                            (_, _) => {return false;}
+                        }
+                    }
+                }
+            }
+        }
+        my_stack.is_empty()
+    }
+}
+
 
 
 
 fn main(){
 
-	let s = "()";
-	println!("must be true");
-	let answer = valid_parentheses(s);
-	println!("asnwer {}", asnwer.to_string());
+	let s = "(]".to_string();
+	let answer = valid_parenthese(s);
+	println!("answer {}, must be false", answer);
+	println!("");
 
-	let s = "()[]{}";
-	println!("must be true");
-	let answer = valid_parentheses(s);
-	println!("asnwer {}", asnwer.to_string());
+	let s = "()[]{}".to_string();
+	let answer = valid_parenthese(s);
+	println!("answer {}, must be true", answer);
+	println!("");
 
-	let s = "(]";
-	println!("must be false");
-	let answer = valid_parentheses(s);
-	println!("asnwer {}", asnwer.to_string());
+	let s = "(]".to_string();
+	let answer = valid_parenthese(s);
+	println!("answer {}, must be false", answer);
+	println!("");
 
-	let s = "([])";
-	println!("must be true");
-	let answer = valid_parentheses(s);
-	println!("asnwer {}", asnwer.to_string());
+	let s = "([])".to_string();
+	let answer = valid_parenthese(s);
+	println!("answer {}, must be true", answer);
+	println!("");
 
-	let s = "([)])";
-	println!("must be false");
-	let answer = valid_parentheses(s);
-	println!("asnwer {}", asnwer.to_string());
+	let s = "([)])".to_string();
+	let answer = valid_parenthese(s);
+	println!("answer {}, must be false", answer);
+	println!("");
+
+	let s = "([){]}".to_string();
+	let answer = valid_parenthese(s);
+	println!("answer {}, must be false", answer);
+	println!("");
+
+	let s = "((".to_string();
+	let answer = valid_parenthese(s);
+	println!("answer {}, must be false", answer);
+	println!("");
 	
+	let s = "){".to_string();
+	let answer = valid_parenthese(s);
+	println!("answer {}, must be false", answer);
+	println!("");
+
+	let s = "([]){".to_string();
+	let answer = valid_parenthese(s);
+	println!("asnwer {}, must be false", answer);
+	println!("");
 }

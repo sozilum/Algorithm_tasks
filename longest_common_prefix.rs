@@ -82,4 +82,9 @@ fn main(){
 	println!("Должен быть ()");
 	println!("Ещё один тест {}", result);
 
+	let strs:Vec<String> = vec!["".to_string()];
+	let result = longest_common_prefix(strs);
+	println!("Должен быть ()");
+	println!("Ещё один тест {}", result);
+
 }
